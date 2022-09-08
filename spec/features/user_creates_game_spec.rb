@@ -19,7 +19,6 @@ RSpec.feature 'USER creates a game', type: :feature do
       )
     end
   end
-
   # Перед началом любого сценария нам надо авторизовать пользователя
   before(:each) do
     login_as user

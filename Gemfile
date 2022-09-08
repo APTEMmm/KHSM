@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.6'
+gem 'rails', '~> 4.2.10'
 ruby '2.5.9'
 
 # Удобная админка для управления любыми сущностями
@@ -12,9 +12,10 @@ gem 'devise-i18n'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
-gem 'twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails', '~> 3.2.2'
 gem 'font-awesome-rails'
 gem 'russian'
+gem 'sass-rails', '~> 5.0.4'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.3.13'
