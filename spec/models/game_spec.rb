@@ -112,8 +112,11 @@ RSpec.describe Game, type: :model do
   end
 
   describe '#current_game_question' do
+    let(:level) { rand(0..Question::QUESTION_LEVELS.last) }
+    before { game_w_questions.current_level = level }
+
     it 'should contain current level' do
-      expect(game_w_questions.current_level).to eq game_w_questions.current_game_question.level
+      expect(game_w_questions.current_game_question).to eq game_w_questions.game_questions[level]
     end
   end
 
