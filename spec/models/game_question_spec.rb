@@ -14,10 +14,10 @@ RSpec.describe GameQuestion, type: :model do
   context 'game status' do
     # тест на правильную генерацию хэша с вариантами
     it 'correct .variants' do
-      expect(game_question.variants).to eq({'a' => game_question.question.answer2,
-                                            'b' => game_question.question.answer1,
-                                            'c' => game_question.question.answer4,
-                                            'd' => game_question.question.answer3})
+      expect(game_question.variants).to eq({ 'a' => game_question.question.answer2,
+                                             'b' => game_question.question.answer1,
+                                             'c' => game_question.question.answer4,
+                                             'd' => game_question.question.answer3 })
     end
 
     it 'correct .answer_correct?' do
@@ -44,6 +44,12 @@ RSpec.describe GameQuestion, type: :model do
 
       ah = game_question.help_hash[:audience_help]
       expect(ah.keys).to contain_exactly('a', 'b', 'c', 'd')
+    end
+  end
+
+  describe '#correct_answer_key' do
+    it 'returns correct answer key' do
+      expect(game_question.correct_answer_key).to eq 'b'
     end
   end
 end
