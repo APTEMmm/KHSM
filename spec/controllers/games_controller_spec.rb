@@ -19,14 +19,84 @@ RSpec.describe GamesController, type: :controller do
 
   # группа тестов для незалогиненного юзера (Анонимус)
   context 'Anon' do
-    # из экшена show анона посылаем
-    it 'kick from #show' do
-      # вызываем экшен
-      get :show, id: game_w_questions.id
-      # проверяем ответ
-      expect(response.status).not_to eq(200) # статус не 200 ОК
-      expect(response).to redirect_to(new_user_session_path) # devise должен отправить на логин
-      expect(flash[:alert]).to be # во flash должен быть прописана ошибка
+    describe '#show' do
+      before { get :show, id: game_w_questions.id }
+
+      it 'returns no positive response' do
+        expect(response.status).not_to eq(200)
+      end
+
+      it 'redirects to login' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it 'returns alert flash' do
+        expect(flash[:alert]).to be
+      end
+    end
+
+    describe '#create' do
+      before { post :create, id: game_w_questions.id }
+
+      it 'returns no positive response' do
+        expect(response.status).not_to eq(200)
+      end
+
+      it 'redirects to login' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it 'returns alert flash' do
+        expect(flash[:alert]).to be
+      end
+    end
+
+    describe '#answer' do
+      before { put :answer, id: game_w_questions.id }
+
+      it 'returns no positive response' do
+        expect(response.status).not_to eq(200)
+      end
+
+      it 'redirects to login' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it 'returns alert flash' do
+        expect(flash[:alert]).to be
+      end
+    end
+
+    describe '#take_money' do
+      before { put :take_money, id: game_w_questions.id }
+
+      it 'returns no positive response' do
+        expect(response.status).not_to eq(200)
+      end
+
+      it 'redirects to login' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it 'returns alert flash' do
+        expect(flash[:alert]).to be
+      end
+    end
+
+    describe '#help' do
+      before { put :help, id: game_w_questions.id }
+
+      it 'returns no positive response' do
+        expect(response.status).not_to eq(200)
+      end
+
+      it 'redirects to login' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it 'returns alert flash' do
+        expect(flash[:alert]).to be
+      end
     end
   end
 
