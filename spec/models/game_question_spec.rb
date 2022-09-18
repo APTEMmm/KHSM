@@ -33,35 +33,76 @@ RSpec.describe GameQuestion, type: :model do
   #   friend_call: 'Василий Петрович считает, что правильный ответ A'
   # }
   #
+  describe '#add_audience_help' do
+    context 'player uses audience_help hint' do
+      let(:ah) { game_question.help_hash[:audience_help] }
 
-  context 'user helpers' do
-    let(:ah) { game_question.help_hash[:audience_help] }
-    let(:ff) { game_question.help_hash[:fifty_fifty] }
-    let(:fc) { game_question.help_hash[:friend_call] }
+      context 'before use' do
+        it 'has no hint in the hash' do
+          expect(game_question.help_hash).not_to include(:audience_help)
+        end
+      end
 
-    it 'correct audience_help' do
-      expect(game_question.help_hash).not_to include(:audience_help)
-      game_question.add_audience_help
-      expect(game_question.help_hash).to include(:audience_help)
+      context 'after use' do
+        before { game_question.add_audience_help }
 
-      expect(ah.keys).to contain_exactly('a', 'b', 'c', 'd')
+        it 'adds hint to help hash' do
+          expect(game_question.help_hash).to include(:audience_help)
+        end
+
+        it 'uses hint correctly' do
+          expect(ah.keys).to contain_exactly('a', 'b', 'c', 'd')
+        end
+      end
     end
+  end
 
-    it 'correct fifty_fifty' do
-      expect(game_question.help_hash).not_to include(:fifty_fifty)
-      game_question.add_fifty_fifty
-      expect(game_question.help_hash).to include(:fifty_fifty)
+  describe '#add_fifty_fifty' do
+    context 'player uses fifty_fifty hint' do
+      let(:ff) { game_question.help_hash[:fifty_fifty] }
 
-      expect(ff).to include('b')
-      expect(ff.size).to eq 2
+      context 'before use' do
+        it 'has no hint in the hash' do
+          expect(game_question.help_hash).not_to include(:fifty_fifty)
+        end
+      end
+
+      context 'after use' do
+        before { game_question.add_fifty_fifty }
+
+        it 'adds hint to help hash' do
+          expect(game_question.help_hash).to include(:fifty_fifty)
+        end
+
+        it 'uses hint correctly' do
+          expect(ff).to include('b')
+          expect(ff.size).to eq 2
+        end
+      end
     end
+  end
 
-    it 'correct friend_call' do
-      expect(game_question.help_hash).not_to include(:friend_call)
-      game_question.add_friend_call
-      expect(game_question.help_hash).to include(:friend_call)
+  describe '#add_friend_call' do
+    context 'player uses friend_call hint' do
+      let(:fc) { game_question.help_hash[:friend_call] }
 
-      expect(fc).to be_a String
+      context 'before use' do
+        it 'has no hint in the hash' do
+          expect(game_question.help_hash).not_to include(:friend_call)
+        end
+      end
+
+      context 'after use' do
+        before { game_question.add_friend_call }
+
+        it 'adds hint to help hash' do
+          expect(game_question.help_hash).to include(:friend_call)
+        end
+
+        it 'uses hint correctly' do
+          expect(fc).to be_a String
+        end
+      end
     end
   end
 
