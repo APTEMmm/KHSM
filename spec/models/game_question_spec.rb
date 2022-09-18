@@ -35,21 +35,45 @@ RSpec.describe GameQuestion, type: :model do
   #
 
   context 'user helpers' do
+    let(:ah) { game_question.help_hash[:audience_help] }
+    let(:ff) { game_question.help_hash[:fifty_fifty] }
+    let(:fc) { game_question.help_hash[:friend_call] }
+
     it 'correct audience_help' do
       expect(game_question.help_hash).not_to include(:audience_help)
-
       game_question.add_audience_help
-
       expect(game_question.help_hash).to include(:audience_help)
 
-      ah = game_question.help_hash[:audience_help]
       expect(ah.keys).to contain_exactly('a', 'b', 'c', 'd')
+    end
+
+    it 'correct fifty_fifty' do
+      expect(game_question.help_hash).not_to include(:fifty_fifty)
+      game_question.add_fifty_fifty
+      expect(game_question.help_hash).to include(:fifty_fifty)
+
+      expect(ff).to include('b')
+      expect(ff.size).to eq 2
+    end
+
+    it 'correct friend_call' do
+      expect(game_question.help_hash).not_to include(:friend_call)
+      game_question.add_friend_call
+      expect(game_question.help_hash).to include(:friend_call)
+
+      expect(fc).to be_a String
     end
   end
 
   describe '#correct_answer_key' do
     it 'returns correct answer key' do
       expect(game_question.correct_answer_key).to eq 'b'
+    end
+  end
+
+  describe '#help_hash' do
+    it 'returns hash' do
+      expect(game_question.help_hash).to be_a Hash
     end
   end
 end
