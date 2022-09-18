@@ -233,11 +233,20 @@ RSpec.describe GamesController, type: :controller do
         context 'after use' do
           before { put :help, id: game_w_questions.id, help_type: :audience_help }
 
-          it 'uses hint correctly' do
+          it 'does not end the game' do
             expect(game.finished?).to be false
+          end
+
+          it 'uses hint' do
             expect(game.audience_help_used).to be true
+          end
+
+          it 'uses hint correctly' do
             expect(game.current_game_question.help_hash[:audience_help]).to be
             expect(game.current_game_question.help_hash[:audience_help].keys).to contain_exactly('a', 'b', 'c', 'd')
+          end
+
+          it 'redirects to game' do
             expect(response).to redirect_to(game_path(game))
           end
         end
@@ -253,12 +262,20 @@ RSpec.describe GamesController, type: :controller do
         context 'after use' do
           before { put :help, id: game_w_questions.id, help_type: :fifty_fifty }
 
-          it 'uses hint correctly' do
+          it 'does not end the game' do
             expect(game.finished?).to be false
+          end
+
+          it 'uses hint' do
             expect(game.fifty_fifty_used).to be true
+          end
+
+          it 'uses hint correctly' do
             expect(game.current_game_question.help_hash[:fifty_fifty]).to be
             expect(game.current_game_question.help_hash[:fifty_fifty]).to include(game.current_game_question.correct_answer_key)
             expect(game.current_game_question.help_hash[:fifty_fifty].size).to eq 2
+          end
+          it 'redirects to game' do
             expect(response).to redirect_to(game_path(game))
           end
         end
