@@ -144,6 +144,28 @@ RSpec.describe GamesController, type: :controller do
       expect(flash.empty?).to be_truthy # удачный ответ не заполняет flash
     end
 
+    # юзер отвечает на вопрос неправильно - игра заканчивается
+    context 'user gives wrong answer' do
+      let(:current_question) { game_w_questions.current_game_question }
+      let(:incorrect_answer_key) { (current_question.variants.keys - [current_question.correct_answer_key]).first }
+      let(:game) { assigns(:game) }
+      let(:prize) { game_w_questions.prize }
+
+      before { put :answer, id: game_w_questions.id, letter: incorrect_answer_key }
+
+      it 'ends the game' do
+        expect(game.finished?).to be(true)
+      end
+
+      it 'returns alert flash' do
+        expect(flash[:alert]).to be
+      end
+
+      it 'accrues fire proof prize' do
+        expect(user.balance).to eq prize
+      end
+    end
+
     # тест на отработку "помощи зала"
     it 'uses audience help' do
       # сперва проверяем что в подсказках текущего вопроса пусто
